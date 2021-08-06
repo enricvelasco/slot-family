@@ -1,0 +1,14 @@
+[
+  {
+    "id": "001",
+    "manufacturer": "Scalextric",
+    "make": "Subaru",
+    "model": "Impreza",
+    "year": "1999",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMUKo771DXjzSxSr0Q9uUffmsFFtDcAOuGl-1v2VmcT9yT0vYc8rYA9OI4cSvs4YtyAHA&usqp=CAU",
+    "owner": "Pau Velasco",
+    "sponsors": ["Pirelli", "Robin"],
+    "description": "Coche adquirido el año 1999",
+    "group": "Rally slow"
+  }
+]
