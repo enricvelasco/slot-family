@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from "next/image";
 import {getCars} from "../../firebase/data/cars";
 import {dataCarsGenerator} from "../../mock/generator";
 
@@ -33,7 +34,7 @@ const Cars = () => {
           return (
             <div key={item.id}>
               <div><Link href={`/cars/${item.id}`} key={item.id}>{carTitle}</Link></div>
-              {item.imgUrl && <img src={item.imgUrl} alt={item.model} width={100} height={75} />}
+              {item.imgUrl && <Image src={item.imgUrl} alt={item.model} width={100} height={75} />}
             </div>
           )
         })}

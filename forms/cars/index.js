@@ -1,5 +1,6 @@
 import React, { useReducer, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {formInitialState, reducer} from "./resources";
 import {sponsorsList} from "../../mock/sponsors";
 import {setImage} from "../../firebase/data/cars";
@@ -17,17 +18,19 @@ const CarsForm = ({ onSubmit, data = null }) => {
   }
 
   const onChange = (file) => {
-    setIsUpdatingImage(true)
-    previewFile(file, 'car_img')
-    const extension = getFileExtension(file.name)
-    setImage({
-      filename: `${generateRandomId()}.${extension}`,
-      payload: file
-    })
-      .then(url => {
-        setIsUpdatingImage(false)
-        dispatch({ type: 'imgUrl', payload: url})
+    if (file) {
+      setIsUpdatingImage(true)
+      previewFile(file, 'car_img')
+      const extension = getFileExtension(file.name)
+      setImage({
+        filename: `${generateRandomId()}.${extension}`,
+        payload: file
       })
+        .then(url => {
+          setIsUpdatingImage(false)
+          dispatch({ type: 'imgUrl', payload: url})
+        })
+    }
   }
 
   return (
@@ -84,7 +87,7 @@ const CarsForm = ({ onSubmit, data = null }) => {
       <div>
         <label>IMAGEN:</label>
         <input type="file" id="files" name="files" onChange={event => onChange(event.target.files[0] || null)} />
-        <img id='car_img' src={imgUrl} height="200" alt="Image preview..." />
+        <Image id='car_img' src={imgUrl} width={100} height={75} alt="Image preview..." />
         {<span>Updating image...</span>}
       </div>
       <div>
