@@ -34,6 +34,12 @@ export const movistar = {
   description: 'Marca de telecomunicaciones'
 }
 
+export const repsol = {
+  name: 'Repsol',
+  imgUrl: 'https://logos-marcas.com/wp-content/uploads/2020/03/Repsol-Logotipo-1997-2012.jpg',
+  description: 'Marca de carburante'
+}
+
 
 export const sponsorsList = [
   movistar,
@@ -41,5 +47,6 @@ export const sponsorsList = [
   ngk,
   piaa,
   pirelli,
-  marlboro
+  marlboro,
+  repsol
 ]
