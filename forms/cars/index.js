@@ -1,15 +1,33 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import Link from 'next/link'
 import {formInitialState, reducer} from "./resources";
 import {sponsorsList} from "../../mock/sponsors";
+import {setImage} from "../../firebase/data/cars";
+import {getFileExtension, previewFile} from "../../services/file_management";
+import {generateRandomId} from "../../services/random";
 
 const CarsForm = ({ onSubmit, data = null }) => {
   const [state, dispatch] = useReducer(reducer, data || formInitialState)
+  const [isUpdatingImage, setIsUpdatingImage] = useState(false)
   const { id, manufacturer, make, model, year, group, imgUrl, owner, sponsors, description } = state
 
   const handleSubmit = (e) => {
     e.preventDefault()
     onSubmit(state)
+  }
+
+  const onChange = (file) => {
+    setIsUpdatingImage(true)
+    previewFile(file, 'car_img')
+    const extension = getFileExtension(file.name)
+    setImage({
+      filename: `${generateRandomId()}.${extension}`,
+      payload: file
+    })
+      .then(url => {
+        setIsUpdatingImage(false)
+        dispatch({ type: 'imgUrl', payload: url})
+      })
   }
 
   return (
@@ -65,7 +83,9 @@ const CarsForm = ({ onSubmit, data = null }) => {
       </div>
       <div>
         <label>IMAGEN:</label>
-        <input type="file" id="files" name="files" />
+        <input type="file" id="files" name="files" onChange={event => onChange(event.target.files[0] || null)} />
+        <img id='car_img' src={imgUrl} height="200" alt="Image preview..." />
+        {<span>Updating image...</span>}
       </div>
       <div>
         <label>PROPIETARIO:</label>
@@ -100,12 +120,6 @@ const CarsForm = ({ onSubmit, data = null }) => {
       </div>
       <div>
         <label>DESCRIPCIÓN:</label>
-        {/* <input
-          type='text'
-          id='description'
-          value={description}
-          onChange={e => dispatch({type: 'description', payload: e.target.value})}
-        /> */}
         <textarea
           id="description"
           rows="4"
@@ -114,7 +128,7 @@ const CarsForm = ({ onSubmit, data = null }) => {
           onChange={e => dispatch({type: 'description', payload: e.target.value})}
         />
       </div>
-      <div><input type='submit' value='Guardar'/><Link href='/cars'><button>Cancelar</button></Link></div>
+      <div><input type='submit' value='Guardar' disabled={isUpdatingImage} /><Link href='/cars'><button>Cancelar</button></Link></div>
     </form>
   )
 }
