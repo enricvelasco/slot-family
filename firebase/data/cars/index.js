@@ -5,7 +5,7 @@ const ref = firebase.firestore().collection(collectionName)
 
 export const getCars = async () => {
   return new Promise(function(resolve, reject) {
-    firebase.firestore().collection(collectionName).get()
+    ref.get()
       .then(querySnapshot => {
         const datalist = []
         querySnapshot.forEach(doc => {datalist.push({id: doc.id, ...doc.data()})});
@@ -15,12 +15,21 @@ export const getCars = async () => {
   })
 }
 
-export const getCarById = () => {
-
+export const getCarById = async (id) => {
+  return new Promise(function(resolve, reject) {
+    ref.doc(id).get()
+      .then(doc => resolve({ id: doc.id, ...doc.data() }))
+      .catch(err => reject(err))
+  })
 }
 
-export const updateCar = () => {
-
+export const updateCar = (data) => {
+  const { id } = data
+  return new Promise(function(resolve, reject) {
+    ref.doc(id).set(data)
+      .then(doc => resolve(doc))
+      .catch(err => reject(err))
+  })
 }
 
 export const saveCar = (data) => {
