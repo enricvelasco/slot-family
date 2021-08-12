@@ -6,6 +6,8 @@ import {sponsorsList} from "../../mock/sponsors";
 import {setImage} from "../../firebase/data/cars";
 import {getFileExtension, previewFile} from "../../services/file_management";
 import {generateRandomId} from "../../services/random";
+import {manufacturersList} from "../../mock/manufacturers";
+import {groupsList} from "../../mock/group";
 
 const CarsForm = ({ onSubmit, data = null }) => {
   const [state, dispatch] = useReducer(reducer, data || formInitialState)
@@ -40,13 +42,28 @@ const CarsForm = ({ onSubmit, data = null }) => {
         <input type='text' id='car_id' value={id} disabled />
       </div>
       <div>
-        <label>FABRICANTE:</label>
-        <input
-          type='text'
-          id='manufacturer'
-          value={manufacturer}
-          onChange={e => dispatch({ type: 'manufacturer', payload: e.target.value})}
-        />
+        <label htmlFor="manufacturer">FABRICANTE:</label>
+        <select
+          id="manufacturer"
+          name="manufacturer"
+          onSelect={e => console.log('SELECTED::', e.target)}
+          onChange={e => dispatch({ type: 'manufacturer', payload: JSON.parse(e.target.value) })}
+        >
+          {
+            manufacturersList.map((item, key) => {
+              const isSelected = manufacturer && item.name === manufacturer.name
+              return (
+                <option
+                  key={key}
+                  value={JSON.stringify(item)}
+                  selected={isSelected}
+                >
+                  {item.name}
+                </option>
+              )
+            })
+          }
+        </select>
       </div>
       <div>
         <label>MARCA:</label>
@@ -76,19 +93,45 @@ const CarsForm = ({ onSubmit, data = null }) => {
         />
       </div>
       <div>
-        <label>GRUPO:</label>
-        <input
+        <label htmlFor="cars_group">CATEGORIAS:</label>
+        <select
+          id="group"
+          name="group"
+          size="5"
+          multiple
+          onChange={e => {
+            const options = Array.from(e.target.selectedOptions, option => JSON.parse(option.value));
+            dispatch({ type: 'group', payload: options })
+          }}
+        >
+          {
+            groupsList.map((item, key) => {
+              const isSelected = group && group.find(g => g.name === item.name)
+              return (
+                <option
+                  key={key}
+                  value={JSON.stringify(item)}
+                  selected={isSelected}
+                >
+                  {item.name}
+                </option>
+              )
+            })
+          }
+        </select>
+        {/* <label>GRUPO:</label>
+          <input
           type='text'
           id='group'
           value={group}
-          onChange={e => dispatch({ type: 'group', payload: e.target.value})}
-        />
+          onChange={e => dispatch({type: 'group', payload: e.target.value})}
+          /> */}
       </div>
       <div>
         <label>IMAGEN:</label>
         <input type="file" id="files" name="files" onChange={event => onChange(event.target.files[0] || null)} />
-        <Image id='car_img' src={imgUrl} width={100} height={75} alt="Image preview..." />
-        {<span>Updating image...</span>}
+        {imgUrl && <Image id='car_img' src={imgUrl} width={100} height={75} alt="Image preview..."/>}
+        {isUpdatingImage && <span>Updating image...</span>}
       </div>
       <div>
         <label>PROPIETARIO:</label>
@@ -131,7 +174,10 @@ const CarsForm = ({ onSubmit, data = null }) => {
           onChange={e => dispatch({type: 'description', payload: e.target.value})}
         />
       </div>
-      <div><input type='submit' value='Guardar' disabled={isUpdatingImage} /><Link href='/cars'><button>Cancelar</button></Link></div>
+      <div>
+        <input type='submit' value='Guardar' disabled={isUpdatingImage} />
+        <Link href='/cars'><button>Cancelar</button></Link>
+      </div>
     </form>
   )
 }
