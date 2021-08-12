@@ -1,5 +1,5 @@
 export function getFileExtension(filename) {
-  return filename.split('.').pop();
+  return filename && filename.split('.').pop();
 }
 
 export function previewFile(file, idPreview) {
