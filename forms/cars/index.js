@@ -8,11 +8,12 @@ import {getFileExtension, previewFile} from "../../services/file_management";
 import {generateRandomId} from "../../services/random";
 import {manufacturersList} from "../../mock/manufacturers";
 import {groupsList} from "../../mock/group";
+import {enginePositionList} from "../../mock/enginePosition";
 
 const CarsForm = ({ onSubmit, data = null }) => {
   const [state, dispatch] = useReducer(reducer, data || formInitialState)
   const [isUpdatingImage, setIsUpdatingImage] = useState(false)
-  const { id, manufacturer, make, model, year, group, imgUrl, owner, sponsors, description } = state
+  const { id, manufacturer, make, model, year, group, imgUrl, owner, sponsors, description, enginePosition } = state
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -46,7 +47,6 @@ const CarsForm = ({ onSubmit, data = null }) => {
         <select
           id="manufacturer"
           name="manufacturer"
-          onSelect={e => console.log('SELECTED::', e.target)}
           onChange={e => dispatch({ type: 'manufacturer', payload: JSON.parse(e.target.value) })}
         >
           {
@@ -93,6 +93,53 @@ const CarsForm = ({ onSubmit, data = null }) => {
         />
       </div>
       <div>
+        <label>IMAGEN:</label>
+        <input type="file" id="files" name="files" onChange={event => onChange(event.target.files[0] || null)} />
+        {imgUrl && <Image id='car_img' src={imgUrl} width={100} height={75} alt="Image preview..."/>}
+        {isUpdatingImage && <span>Updating image...</span>}
+      </div>
+      <div>
+        <label>POSICIÓN DEL MOTOR:</label>
+        {enginePositionList.map((item, key) => {
+          const isSelected = enginePosition && enginePosition.name === item.name
+          return (
+            <span key={key}>
+              <input
+                onChange={e => dispatch({ type: 'enginePosition', payload: JSON.parse(e.target.value) })}
+                type="radio"
+                id={item.name}
+                name="fav_language"
+                value={JSON.stringify(item)}
+                checked={isSelected}
+              />
+              <label htmlFor={item.name}>{item.name}</label>
+            </span>
+          )
+        })}
+      </div>
+      <div>
+        <label>PATROCINADORES:</label>
+        {sponsorsList.map((item, key) => (
+          <div key={key}>
+            <input
+              type="checkbox"
+              id={item.name}
+              name={item.name}
+              defaultChecked={sponsors && sponsors.find(sponsor => sponsor.name === item.name)}
+              onChange={e => {
+                const isChecked = e.target.checked
+                const data = isChecked ? [...sponsors, item] : sponsors.filter(sponsor => sponsor.name !== item.name)
+                dispatch({
+                  type: 'sponsors',
+                  payload: data
+                })
+              }}
+            />
+            <label>{item.name}</label>
+          </div>
+        ))}
+      </div>
+      <div>
         <label htmlFor="cars_group">CATEGORIAS:</label>
         <select
           id="group"
@@ -119,50 +166,6 @@ const CarsForm = ({ onSubmit, data = null }) => {
             })
           }
         </select>
-        {/* <label>GRUPO:</label>
-          <input
-          type='text'
-          id='group'
-          value={group}
-          onChange={e => dispatch({type: 'group', payload: e.target.value})}
-          /> */}
-      </div>
-      <div>
-        <label>IMAGEN:</label>
-        <input type="file" id="files" name="files" onChange={event => onChange(event.target.files[0] || null)} />
-        {imgUrl && <Image id='car_img' src={imgUrl} width={100} height={75} alt="Image preview..."/>}
-        {isUpdatingImage && <span>Updating image...</span>}
-      </div>
-      <div>
-        <label>PROPIETARIO:</label>
-        <input
-          type='text'
-          id='owner'
-          value={owner}
-          onChange={e => dispatch({ type: 'owner', payload: e.target.value})}
-        />
-      </div>
-      <div>
-        <label>PATROCINADORES:</label>
-        {sponsorsList.map((item, key) => (
-          <div key={key}>
-            <input
-              type="checkbox"
-              id={item.name}
-              name={item.name}
-              defaultChecked={sponsors && sponsors.find(sponsor => sponsor.name === item.name)}
-              onChange={e => {
-                const isChecked = e.target.checked
-                const data = isChecked ? [...sponsors, item] : sponsors.filter(sponsor => sponsor.name !== item.name)
-                dispatch({
-                  type: 'sponsors',
-                  payload: data
-                })
-              }}
-            />
-            <label>{item.name}</label>
-          </div>
-        ))}
       </div>
       <div>
         <label>DESCRIPCIÓN:</label>
@@ -172,6 +175,15 @@ const CarsForm = ({ onSubmit, data = null }) => {
           cols="50"
           value={description}
           onChange={e => dispatch({type: 'description', payload: e.target.value})}
+        />
+      </div>
+      <div>
+        <label>PROPIETARIO:</label>
+        <input
+          type='text'
+          id='owner'
+          value={owner}
+          onChange={e => dispatch({ type: 'owner', payload: e.target.value})}
         />
       </div>
       <div>
