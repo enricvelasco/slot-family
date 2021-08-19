@@ -10,6 +10,10 @@ export const scalextric = {
   name: 'Scalextric'
 }
 
+export const scx = {
+  name: 'SCX'
+}
+
 export const superSlot = {
   name: 'Super Slot'
 }
@@ -30,6 +34,7 @@ export const manufacturersList = [
   scaleauto,
   carrera,
   scalextric,
+  scx,
   superSlot,
   nsr,
   ninco,
