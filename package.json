@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "canvas": "^2.8.0",
     "firebase": "^8.8.1",
     "next": "11.0.1",
     "react": "17.0.2",

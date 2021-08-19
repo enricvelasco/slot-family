@@ -4,7 +4,10 @@ import Image from 'next/image'
 import {formInitialState, reducer} from "./resources";
 import {sponsorsList} from "../../mock/sponsors";
 import {setImage} from "../../firebase/data/cars";
-import {getFileExtension, previewFile} from "../../services/file_management";
+import {
+  getFileExtension,
+  resizeImage,
+} from "../../services/file_management";
 import {generateRandomId} from "../../services/random";
 import {manufacturersList} from "../../mock/manufacturers";
 import {groupsList} from "../../mock/group";
@@ -19,18 +22,21 @@ const CarsForm = ({ onSubmit, data = null }) => {
     onSubmit(state)
   }
 
-  const onChange = (file) => {
+  const onChange = async (file) => {
     if (file) {
       setIsUpdatingImage(true)
-      previewFile(file, 'car_img')
       const extension = getFileExtension(file.name)
-      setImage({
-        filename: `${generateRandomId()}.${extension}`,
-        payload: file
-      })
-        .then(url => {
-          setIsUpdatingImage(false)
-          dispatch({ type: 'imgUrl', payload: url})
+      resizeImage({ file, maxWidth: 500 })
+        .then(resizedImage => {
+          setImage({
+            filename: `${generateRandomId()}.${extension}`,
+            payload: resizedImage
+          })
+            .then(url => {
+              console.log('IMAGE_UPDATED', url)
+              setIsUpdatingImage(false)
+              dispatch({ type: 'imgUrl', payload: url})
+            })
         })
     }
   }
