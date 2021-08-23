@@ -42,6 +42,74 @@ const dataURLToBlob = function(dataURL) {
   return new Blob([uInt8Array], {type: contentType});
 }
 
+function getBase64Image(img) {
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+  var dataURL = canvas.toDataURL("image/png");
+  return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
+
+export const setImageFromURL = ({ url, maxWidth, maxHeight }) => {
+  const image = new Image()
+
+  image.onload = function () {
+    const canvas = document.createElement('canvas')
+
+    const MAX_WIDTH = maxWidth;
+    const MAX_HEIGHT = maxHeight;
+    let width = image.width;
+    let height = image.height;
+
+    if (!!maxWidth && width > height) {
+      if (width > MAX_WIDTH) {
+        height *= MAX_WIDTH / width;
+        width = MAX_WIDTH;
+      }
+    } else if (!!maxHeight) {
+      if (height > MAX_HEIGHT) {
+        width *= MAX_HEIGHT / height;
+        height = MAX_HEIGHT;
+      }
+    }
+    canvas.width = width;
+    canvas.height = height;
+
+    canvas.getContext('2d').drawImage(image, 0, 0);
+    const dataUrl = canvas.toDataURL('image/png');
+    const resizedImage = dataURLToBlob(dataUrl);
+
+    console.log('RESIZED___', resizedImage)
+  }
+
+  image.src = url
+}
+
+export function getBase64ImageFromURL(src) {
+  const img = new Image();
+  img.crossOrigin = 'Anonymous';
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    let dataURL;
+    canvas.height = img.naturalHeight;
+    canvas.width = img.naturalWidth;
+    ctx.drawImage(img, 0, 0);
+    dataURL = canvas.toDataURL('image/png');
+
+    console.log('DATA_URL', dataURL)
+    // callback(dataURL);
+  };
+
+  img.src = src;
+  if (img.complete || img.complete === undefined) {
+    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    img.src = src;
+  }
+}
+
 export const resizeImage = ({ file, maxWidth, maxHeight }) => {
   return new Promise((resolve, reject) => {
     const isImageFile = !!file.type.match(/image.*/)

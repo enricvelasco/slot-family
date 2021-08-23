@@ -23,7 +23,7 @@ const CarsForm = ({ onSubmit, data = null }) => {
     onSubmit(state)
   }
 
-  const onChange = async (file) => {
+  const onChange = (file) => {
     if (file) {
       setIsUpdatingImage(true)
       const extension = getFileExtension(file.name)

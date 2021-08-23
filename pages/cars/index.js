@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from "next/image";
 import {getCars} from "../../firebase/data/cars";
-import {dataCarsGenerator} from "../../mock/generator";
 
 const Cars = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -11,20 +10,19 @@ const Cars = () => {
   useEffect(() => {
     getCars()
       .then(list => {
-        setIsLoading(false)
         setCarsList(list)
       })
       .catch(err => {
-        setIsLoading(false)
         console.log('ERROR_ON_GET_CARS', err)
       })
+      .finally(() => setIsLoading(false))
   })
 
   return (
     <div>
-      <div>CARS_LIST</div>
+      <h2>CARS_LIST</h2>
       <Link href='/cars/new'>INSERTAR_COCHE</Link>
-      <button onClick={dataCarsGenerator}>Generar coches</button>
+      {/* <button onClick={dataCarsGenerator}>Generar coches</button> */}
       <br />
       {isLoading && <div>Loading list...</div>}
       {!isLoading &&
