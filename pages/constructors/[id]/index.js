@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 import {useRouter} from "next/router";
-import {getSponsorById, updateSponsor} from "../../../firebase/data/sponsors";
-import SponsorsForm from "../../../forms/sponsors";
+import {getConstructorById, updateConstructor} from "../../../firebase/data/constructors";
+import ConstructorsForm from "../../../forms/constructors";
 
-const SponsorsProfile = () => {
+const ConstructorsProfile = () => {
   const router = useRouter()
   const { id } = router.query
 
@@ -11,7 +11,7 @@ const SponsorsProfile = () => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    id && getSponsorById(id)
+    id && getConstructorById(id)
       .then(res => {
         setIsLoadingData(false)
         setData(res)
@@ -23,18 +23,18 @@ const SponsorsProfile = () => {
   })
 
   const onSubmit = (data) => {
-    updateSponsor(data)
-      .then(() => router.push('/sponsors'))
+    updateConstructor(data)
+      .then(() => router.push('/constructors'))
       .catch(err => console.log('ERROR_ON_UPDATE_SPONSOR', err))
   }
 
   return (
     <div>
-      Sponsor Profile {id}
+      Constructor Profile {id}
       {isLoadingData && <div>Loading...</div>}
-      {!isLoadingData && data && <SponsorsForm onSubmit={onSubmit} data={data} />}
+      {!isLoadingData && data && <ConstructorsForm onSubmit={onSubmit} data={data} />}
     </div>
   )
 }
 
-export default SponsorsProfile
+export default ConstructorsProfile
