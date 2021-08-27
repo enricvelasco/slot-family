@@ -1,0 +1,25 @@
+@import "styles/mixins/media-queries";
+
+.listContainer {
+  padding: 0.5rem;
+  height: 100%;
+}
+
+.poster {
+  border-radius: 25px;
+  height: 30%;
+  margin-bottom: 2rem;
+
+  @include desktop {
+    height: 50%;
+  }
+}
+
+.carouselItem {
+  border-radius: 25px;
+  height: 100%;
+}
+
+.carouselContainer {
+  margin-bottom: 1em;
+}

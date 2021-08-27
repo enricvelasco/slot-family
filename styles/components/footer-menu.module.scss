@@ -1,0 +1,77 @@
+.container {
+  width: 100%;
+  max-width: 67.6rem;
+  height: 3.75rem;
+  background-color: yellow;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.select {
+  background-color: transparent;
+  border: none;
+  height: 3.75rem;
+  width: 3.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.option {
+  margin-top: 1rem;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  /*-webkit-box-shadow: 0px 0px 20px -6px #000000;
+  box-shadow: 0px 0px 20px -6px #000000;*/
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.icon {
+
+}
+
+@keyframes showOptions {
+  from {
+    height: 0;
+  }
+  to {
+    height: 400px;
+  }
+}
+
+.optionsContainer {
+  position: absolute;
+  bottom: 45px;
+  height: 0;
+  overflow: hidden;
+  width: 3.75rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.show {
+  padding-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  animation-name: showOptions;
+  animation-duration: 1.5s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+}
+
+.buttonContainer {
+  position: relative;
+}

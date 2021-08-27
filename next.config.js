@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   reactStrictMode: true,
   images: {
@@ -7,5 +9,8 @@ module.exports = {
       'logodownload.org',
       'worldvectorlogo.com'
     ],
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
   }
 }

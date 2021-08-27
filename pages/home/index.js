@@ -1,8 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
+import Wrapper from "../../components/wrapper";
 
 const Home = () => (
-  <div>
+  <Wrapper>
     <div>HOME</div>
     <ul>
       <li><Link href={'/cars'}>GO_TO_CARS_LIST</Link></li>
@@ -11,7 +12,7 @@ const Home = () => (
       <li><Link href={'/championship-types'}>GO_TO_CHAMPIONSHIP_TYPES_LIST</Link></li>
       <li><Link href={'/manufacturers'}>GO_TO_MANUFACTURERS_LIST</Link></li>
     </ul>
-  </div>
+  </Wrapper>
 )
 
 export default Home

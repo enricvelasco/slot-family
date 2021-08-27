@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Link from "next/link";
 import {getSponsors} from "../../firebase/data/sponsors";
-import Image from "next/image";
+import ListView from "../../components/list-view";
+import Wrapper from "../../components/wrapper";
 
 const Sponsors = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -17,25 +17,10 @@ const Sponsors = () => {
   }, [])
 
   return (
-    <div>
-      <h2>SPONSORS_LIST</h2>
-      <Link href='/sponsors/new'><button>NEW</button></Link>
+    <Wrapper>
       {isLoading && <div>Loading list...</div>}
-      {!isLoading &&
-        <>
-          {list && list.map(( item, key ) => {
-            return (
-              <div key={key}>
-                <Link href={`/sponsors/${item.id}`}>{item.name}</Link>
-                {item.imageUrl && <Image src={item.imageUrl} alt={item.name} width={100} height={75} />}
-                {/* <img src={item.imageUrl} width={100} height={75}/> */}
-              </div>
-            )
-          })}
-        </>
-      }
-      <Link href='/home'><button>Go Home</button></Link>
-    </div>
+      {!isLoading && list && <ListView data={list} />}
+    </Wrapper>
   )
 }
 
