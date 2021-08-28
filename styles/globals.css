@@ -6,6 +6,23 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+html {
+  background-color: #b0b0b0;
+  height: 100vh;
+  width: 100vw;
+  font-size: 16px;
+}
+
+body {
+  max-width: 67.6rem;
+  min-width: 22.5rem;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #dedede;
+  height: 100%;
+  padding-bottom: 3.75rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -13,4 +30,12 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+#__next {
+  height: 100%;
 }

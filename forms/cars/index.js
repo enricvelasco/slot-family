@@ -16,7 +16,7 @@ import {enginePositionList} from "../../mock/enginePosition";
 const CarsForm = ({ onSubmit, data = null }) => {
   const [state, dispatch] = useReducer(reducer, data || formInitialState)
   const [isUpdatingImage, setIsUpdatingImage] = useState(false)
-  const { id, manufacturer, make, model, year, group, imgUrl, owner, sponsors, description, enginePosition } = state
+  const { id, manufacturer, make, model, year, group, imageUrl, owner, sponsors, description, enginePosition } = state
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -36,7 +36,7 @@ const CarsForm = ({ onSubmit, data = null }) => {
             .then(url => {
               console.log('IMAGE_UPDATED', url)
               setIsUpdatingImage(false)
-              dispatch({ type: 'imgUrl', payload: url})
+              dispatch({ type: 'imageUrl', payload: url})
             })
         })
     }
@@ -101,7 +101,7 @@ const CarsForm = ({ onSubmit, data = null }) => {
       <div>
         <label>IMAGEN:</label>
         <input type="file" id="files" name="files" onChange={event => onChange(event.target.files[0] || null)} />
-        {imgUrl && <Image id='car_img' src={imgUrl} width={100} height={75} alt="Image preview..."/>}
+        {imageUrl && <Image id='car_img' src={imageUrl} width={100} height={75} alt="Image preview..."/>}
         {isUpdatingImage && <span>Updating image...</span>}
       </div>
       <div>

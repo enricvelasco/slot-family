@@ -1,0 +1,41 @@
+@import "../config/media-queries"
+
+@mixin small-mobile
+  @media (max-width: #{$mobile-max-width})
+    @content
+
+@mixin small-tablet-only
+  @media (max-width: #{$mobile-width})
+    @content
+
+@mixin small-tablet
+  @media (min-width: #{$mobile-width + 1px})
+    @content
+
+@mixin mobile-only
+  @media (max-width: #{$desktop-width})
+    @content
+
+@mixin tablet-only
+  @media (max-width: #{$tablet-width})
+    @content
+
+@mixin tablet
+  @media (min-width: #{$tablet-width + 1px})
+    @content
+
+@mixin desktop
+  @media (min-width: #{$desktop-width + 1px})
+    @content
+
+@mixin large-desktop
+  @media (min-width: #{$large-desktop-width + 1px})
+    @content
+
+@mixin from-breakpoint($breakpoint)
+  @media (min-width: #{$breakpoint + 1px})
+    @content
+
+@mixin i-explorer
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active)
+    @content
