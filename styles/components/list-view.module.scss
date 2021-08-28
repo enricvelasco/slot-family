@@ -3,6 +3,7 @@
 .listContainer {
   padding: 0.5rem;
   height: 100%;
+  position: relative;
 }
 
 .poster {
@@ -22,4 +23,32 @@
 
 .carouselContainer {
   margin-bottom: 1em;
+}
+
+.buttonsContainer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.description {
+  max-height: 50%;
+  overflow-y: auto;
+  font-size: 18px;
+
+  @include desktop {
+    max-height: 25%;
+  }
 }

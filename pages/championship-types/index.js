@@ -4,6 +4,7 @@ import Image from "next/image";
 import {getChampionshipTypes} from "../../firebase/data/championship-types";
 import ListView from "../../components/list-view";
 import Wrapper from "../../components/wrapper";
+import {sortArrayByParam} from "../../services/array";
 
 const ChampionshipTypes = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -24,7 +25,7 @@ const ChampionshipTypes = () => {
       {/* <h2>Tipos de Campeonato LIST</h2>
         <Link href='/championship-types/new'><button>NEW</button></Link> */}
       {isLoading && <div>Loading list...</div>}
-      {!isLoading && list && <ListView data={list} />}
+      {!isLoading && list && <ListView data={sortArrayByParam(list, 'order')} />}
       {/*!isLoading &&
       <>
         {list && list.map(( item, key ) => {

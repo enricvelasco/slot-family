@@ -11,7 +11,7 @@ const ChampionshipTypesForm = ({ onSubmit, data }) => {
   const [useUrlImage, setUseUrlImage] = useState(true)
   const [isUpdatingImage, setIsUpdatingImage] = useState(false)
   const [state, dispatch] = useReducer(reducer, data || formInitialState)
-  const { id, name, imageUrl, description } = state
+  const { id, name, imageUrl, description, order } = state
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -56,6 +56,15 @@ const ChampionshipTypesForm = ({ onSubmit, data }) => {
           id='championship-name'
           value={name}
           onChange={e => dispatch({ type: 'name', payload: e.target.value})}
+        />
+      </div>
+      <div>
+        <label>ORDEN:</label>
+        <input
+          type='number'
+          id='championship-order'
+          value={order}
+          onChange={e => dispatch({ type: 'order', payload: e.target.value})}
         />
       </div>
       <div>

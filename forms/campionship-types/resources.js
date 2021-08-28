@@ -1,5 +1,6 @@
 export const formInitialState = {
   name: '',
+  order: 0,
   imageUrl: '',
   description: ''
 }
