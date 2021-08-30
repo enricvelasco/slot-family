@@ -29,11 +29,10 @@ const CarProfile = () => {
   }
 
   return (
-    <div>
-      CarProfile {id}
+    <>
       {isLoadingData && <div>Loading...</div>}
       {!isLoadingData && carData && <CarsForm onSubmit={onSubmit} data={carData} />}
-    </div>
+    </>
   )
 }
 

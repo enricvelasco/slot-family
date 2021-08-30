@@ -1,22 +1,40 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import {formInitialState, reducer} from "./resources";
-import {sponsorsList} from "../../mock/sponsors";
+import {formInitialState, reducer, formInitialOptions} from "./resources";
 import {setImage} from "../../firebase/data/cars";
 import {
   getFileExtension,
   resizeImage,
 } from "../../services/file_management";
 import {generateRandomId} from "../../services/random";
-import {manufacturersList} from "../../mock/manufacturers";
 import {groupsList} from "../../mock/group";
 import {enginePositionList} from "../../mock/enginePosition";
+import Wrapper from "../../components/wrapper";
+import css from '../../styles/components/form.module.scss'
+import {getManufacturers} from "../../firebase/data/manufacturers";
+import {getConstructors} from "../../firebase/data/constructors";
+import {getSponsors} from "../../firebase/data/sponsors";
+import {getChampionshipTypes} from "../../firebase/data/championship-types";
 
 const CarsForm = ({ onSubmit, data = null }) => {
   const [state, dispatch] = useReducer(reducer, data || formInitialState)
   const [isUpdatingImage, setIsUpdatingImage] = useState(false)
-  const { id, manufacturer, make, model, year, group, imageUrl, owner, sponsors, description, enginePosition } = state
+  const { id, manufacturer, constructor, model, year, group, imageUrl, owner, sponsors, description, enginePosition } = state
+
+  const [optionsState, optionsDispatch] = useReducer(reducer, formInitialOptions)
+  const {manufacturerList, constructorList, sponsorsList, championshipTypesList} = optionsState
+
+  useEffect(() => {
+    getManufacturers()
+      .then(res => optionsDispatch({ type: 'manufacturerList', payload: res }))
+    getConstructors()
+      .then(res => optionsDispatch({ type: 'constructorList', payload: res }))
+    getSponsors()
+      .then(res => optionsDispatch({ type: 'sponsorsList', payload: res }))
+    getChampionshipTypes()
+      .then(res => optionsDispatch({ type: 'championshipTypesList', payload: res }))
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -27,7 +45,7 @@ const CarsForm = ({ onSubmit, data = null }) => {
     if (file) {
       setIsUpdatingImage(true)
       const extension = getFileExtension(file.name)
-      resizeImage({ file, maxWidth: 500 })
+      resizeImage({ file, maxWidth: 1080 })
         .then(resizedImage => {
           setImage({
             filename: `${generateRandomId()}.${extension}`,
@@ -43,7 +61,9 @@ const CarsForm = ({ onSubmit, data = null }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Wrapper>
+    <form className={css.container} onSubmit={handleSubmit}>
+      <h2>{id ? 'Edición' : 'Nuevo'}</h2>
       <div>
         <label>ID:</label>
         <input type='text' id='car_id' value={id} disabled />
@@ -56,8 +76,8 @@ const CarsForm = ({ onSubmit, data = null }) => {
           onChange={e => dispatch({ type: 'manufacturer', payload: JSON.parse(e.target.value) })}
         >
           {
-            manufacturersList.map((item, key) => {
-              const isSelected = manufacturer && item.name === manufacturer.name
+            manufacturerList.map((item, key) => {
+              const isSelected = manufacturer && item.id === manufacturer.id
               return (
                 <option
                   key={key}
@@ -72,13 +92,27 @@ const CarsForm = ({ onSubmit, data = null }) => {
         </select>
       </div>
       <div>
-        <label>MARCA:</label>
-        <input
-          type='text'
-          id='make'
-          value={make}
-          onChange={e => dispatch({ type: 'make', payload: e.target.value})}
-        />
+        <label htmlFor="constructor">CONSTRUCTOR:</label>
+        <select
+          id="constructor"
+          name="constructor"
+          onChange={e => dispatch({ type: 'constructor', payload: JSON.parse(e.target.value) })}
+        >
+          {
+            constructorList.map((item, key) => {
+              const isSelected = constructor && item.id === constructor.id
+              return (
+                <option
+                  key={key}
+                  value={JSON.stringify(item)}
+                  selected={isSelected}
+                >
+                  {item.name}
+                </option>
+              )
+            })
+          }
+        </select>
       </div>
       <div>
         <label>MODELO:</label>
@@ -131,10 +165,11 @@ const CarsForm = ({ onSubmit, data = null }) => {
               type="checkbox"
               id={item.name}
               name={item.name}
-              defaultChecked={sponsors && sponsors.find(sponsor => sponsor.name === item.name)}
+              defaultChecked={sponsors && sponsors.find(sponsor => sponsor.id === item.id)}
               onChange={e => {
                 const isChecked = e.target.checked
-                const data = isChecked ? [...sponsors, item] : sponsors.filter(sponsor => sponsor.name !== item.name)
+                console.log('SPONSORS', sponsors)
+                const data = isChecked ? [...sponsors, item] : sponsors.filter(sponsor => sponsor.id !== item.id)
                 dispatch({
                   type: 'sponsors',
                   payload: data
@@ -158,8 +193,8 @@ const CarsForm = ({ onSubmit, data = null }) => {
           }}
         >
           {
-            groupsList.map((item, key) => {
-              const isSelected = group && group.find(g => g.name === item.name)
+            championshipTypesList.map((item, key) => {
+              const isSelected = group && group.find(g => g.id === item.id)
               return (
                 <option
                   key={key}
@@ -197,6 +232,7 @@ const CarsForm = ({ onSubmit, data = null }) => {
         <Link href='/cars'><button>Cancelar</button></Link>
       </div>
     </form>
+    </Wrapper>
   )
 }
 

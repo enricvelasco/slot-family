@@ -32,6 +32,17 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 27%;
+  @include desktop {
+    height: 46%;
+  }
+}
+
+.buttonsGroup {
+  display: flex;
+  flex-direction: column;
 }
 
 .button {
@@ -51,4 +62,9 @@
   @include desktop {
     max-height: 25%;
   }
+}
+
+.searcherContainer {
+  display: flex;
+  align-items: center;
 }
