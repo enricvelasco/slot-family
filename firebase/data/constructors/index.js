@@ -1,4 +1,5 @@
 import firebase from "../../config";
+import {sortArrayByParam} from "../../../services/array";
 
 const collectionName = 'constructors'
 const ref = firebase.firestore().collection(collectionName)
@@ -9,7 +10,7 @@ export const getConstructors = async () => {
       .then(querySnapshot => {
         const datalist = []
         querySnapshot.forEach(doc => {datalist.push({id: doc.id, ...doc.data()})});
-        resolve(datalist)
+        resolve(sortArrayByParam(datalist, 'name'))
       })
       .catch(err => reject(err))
   })

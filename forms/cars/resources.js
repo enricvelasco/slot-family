@@ -1,6 +1,6 @@
 export const formInitialState = {
   manufacturer: '',
-  make: '',
+  constructor: '',
   model: '',
   year: '',
   group: '',
@@ -8,6 +8,13 @@ export const formInitialState = {
   owner: '',
   sponsors: [],
   description: ''
+}
+
+export const formInitialOptions = {
+  manufacturerList: [],
+  constructorList: [],
+  sponsorsList: [],
+  championshipTypesList: []
 }
 
 export const reducer = (state, action) => {

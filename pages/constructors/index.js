@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import Link from "next/link";
-import Image from "next/image";
 import {getConstructors} from "../../firebase/data/constructors";
 import {sortArrayByParam} from "../../services/array";
 import Wrapper from "../../components/wrapper";

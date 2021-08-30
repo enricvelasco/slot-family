@@ -7,7 +7,8 @@ module.exports = {
       'firebasestorage.googleapis.com',
       '1000marcas.net',
       'logodownload.org',
-      'worldvectorlogo.com'
+      'worldvectorlogo.com',
+      'car-logos.net'
     ],
   },
   sassOptions: {
