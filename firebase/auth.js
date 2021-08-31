@@ -6,6 +6,7 @@ export const setLoginWithEmailAndPassword = async (email, password) => (
 
 export const onAuthStateChange = (onChange) => {
   return firebase.auth().onAuthStateChanged(data => {
+    console.log('LOGIN', data)
     onChange(data)
   })
 }
@@ -18,3 +19,5 @@ export const onSignOut = () => {
     console.error('ERROR_ON_SIGN_OUT', error)
   })
 }
+
+module.exports = { onAuthStateChange }

@@ -6,12 +6,13 @@ import Image from "next/image";
 
 const ImageContainer = ({ className, src, alt }) => (
   <div className={clsx(css.imageContainer, className)}>
-    <Image
+    {src && <Image
       src={src}
       alt={alt}
       layout={'fill'}
       className={clsx(cssImage.imageCover, className)}
-    />
+    />}
+    {!src && <div>{alt}</div>}
   </div>
 )
 

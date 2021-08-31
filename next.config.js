@@ -1,5 +1,4 @@
 const path = require('path')
-
 module.exports = {
   reactStrictMode: true,
   images: {
@@ -13,5 +12,16 @@ module.exports = {
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
-  }
+  },
+  async redirects() {
+    let isLogged = false
+    console.log('REDIRECT!!!', isLogged)
+    return [
+      {
+        source: '/about',
+        destination: '/cars',
+        permanent: true,
+      },
+    ]
+  },
 }
