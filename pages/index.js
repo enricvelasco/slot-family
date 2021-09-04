@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import {onAuthStateChange, onSignOut, setLogin} from "../firebase/auth";
+import React from "react";
 import Login from "./login";
+import Cars from "./cars";
 
-export default function Home() {
-  // setLogin()
-  const [isAuth, setIsAuth] = useState(onAuthStateChange(user => !!user))
+export default function Home({ user }) {
   return (
-    <div>
-      {isAuth && <Home />}
-      {!isAuth && <Login />}
-    </div>
+    <>
+      holaaa
+      {!user && <Login />}
+      {!!user && <Cars user={user} />}
+    </>
   )
 }
