@@ -6,11 +6,11 @@ function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    console.log('REFRESH_APP')
     onAuthStateChange(setUser)
   })
 
   return <Component user={user} {...pageProps} />
+
 }
 
 export default MyApp
