@@ -25,7 +25,8 @@ const ChampionshipTypes = () => {
       {/* <h2>Tipos de Campeonato LIST</h2>
         <Link href='/championship-types/new'><button>NEW</button></Link> */}
       {isLoading && <div>Loading list...</div>}
-      {!isLoading && list && <ListView data={sortArrayByParam(list, 'order')} />}
+      {!isLoading && list && <ListView data={sortArrayByParam(list, 'order')} viewParams={['imageUrl', 'name', '']} />}
+
       {/*!isLoading &&
       <>
         {list && list.map(( item, key ) => {

@@ -8,8 +8,10 @@ import PencilIcon from "../ui/icons/pencil-icon";
 import PlusIcon from "../ui/icons/plus-icon";
 import SearchIcon from "../ui/icons/search-icon";
 import clsx from "clsx";
+import TableListView from "../table-list-view";
+import {sortArrayByParam} from "../../services/array";
 
-const ListView = ({ data, imageClassName }) => {
+const ListView = ({ data, imageClassName, viewParams }) => {
   const router = useRouter()
   const { pathname } = router
   const [dataList, setDataList] = useState(data)
@@ -67,16 +69,21 @@ const ListView = ({ data, imageClassName }) => {
         alt={selectedValue?.name}
       />
       <div className={css.carouselContainer}>
-        <Carousel
+        {/* <Carousel
           list={dataList}
           viewParam={'name'}
           onSelect={onSelectItem}
           keySelected={selectedIndex}
           imageClassName={imageClassName}
           ContentComponent={ListViewContentComponent}
+        /> */}
+        <TableListView
+          list={data}
+          params={viewParams}
+          onSelect={onSelectItem}
         />
       </div>
-      <div className={css.description}>{selectedValue.description}</div>
+      {/* <div className={css.description}>{selectedValue.description}</div> */}
       {/* <Carousel/> */}
       {/* <div>DESCRIPTION</div> */}
     </div>
