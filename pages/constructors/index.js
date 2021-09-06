@@ -20,7 +20,7 @@ const Constructors = () => {
   return (
     <Wrapper>
       {isLoading && <div>Loading list...</div>}
-      {!isLoading && list && <ListView data={list} />}
+      {!isLoading && list && <ListView data={sortArrayByParam(list, 'order')} viewParams={['imageUrl', 'name', '']} />}
     </Wrapper>
   )
 }
