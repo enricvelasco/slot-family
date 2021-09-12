@@ -6,7 +6,6 @@ import {onAuthStateChange} from "../../firebase/auth";
 
 const Wrapper = ({ children }) => {
   const router = useRouter()
-
   const [userData, setUserData] = useState({user: null, firstTime: true})
 
   useEffect(() => {
@@ -15,7 +14,6 @@ const Wrapper = ({ children }) => {
   },[])
 
   useEffect(() => {
-    console.log('USER_CH', userData)
     if (!userData.user && !userData.firstTime) {
       router.push('/login')
     }
@@ -30,8 +28,3 @@ const Wrapper = ({ children }) => {
 }
 
 export default Wrapper
-
-/*
-
-*
-*/
