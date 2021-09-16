@@ -5,11 +5,23 @@ import css from '../../styles/basic-race/basic-race.module.scss'
 import clsx from "clsx";
 import BasicRaceForm from "../../forms/basic-race";
 import {startTrafficLights,} from "../../arduino/trafficLights";
-import {formInitialState, reducer} from "./resources";
 
 const SERVER = "http://localhost:8000";
 
 const BasicRace = () => {
+  export const formInitialState = {
+    player1Laps: '0',
+    player2Laps: '0',
+  }
+
+  export const reducer = (state, action) => {
+    const { type, payload } = action
+    return {
+      ...state,
+      [type]: payload
+    }
+  }
+
   const [state, dispatch] = useReducer(reducer, formInitialState)
   const { player1Laps, player2Laps } = state
 
