@@ -9,12 +9,12 @@ import {startTrafficLights,} from "../../arduino/trafficLights";
 const SERVER = "http://localhost:8000";
 
 const BasicRace = () => {
-  export const formInitialState = {
+  const formInitialState = {
     player1Laps: '0',
     player2Laps: '0',
   }
 
-  export const reducer = (state, action) => {
+  const reducer = (state, action) => {
     const { type, payload } = action
     return {
       ...state,
