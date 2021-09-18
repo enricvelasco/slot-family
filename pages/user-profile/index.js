@@ -3,7 +3,7 @@ import Wrapper from "../../components/wrapper";
 import {onSignOut, setLoginWithEmailAndPassword} from "../../firebase/auth";
 import {useRouter} from "next/router";
 
-const UserProfile = () => {
+const UserProfile = ({ user }) => {
   const router = useRouter()
 
   const onSubmitLogin = (e) => {
@@ -15,6 +15,7 @@ const UserProfile = () => {
   return (
     <Wrapper>
       User PROFILE
+      <p>{user && user.email}</p>
       <button onClick={onSignOut}>LOGOUUT</button>
     </Wrapper>
   )

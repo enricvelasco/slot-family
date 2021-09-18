@@ -4,7 +4,8 @@ import Wrapper from "../../components/wrapper";
 import css from '../../styles/basic-race/basic-race.module.scss'
 import clsx from "clsx";
 import BasicRaceForm from "../../forms/basic-race";
-import {startTrafficLights,} from "../../arduino/trafficLights";
+import {startYellowLight,} from "../../arduino/trafficLights";
+import {saveBasicRace} from "../../firebase/data/basic-race";
 
 const SERVER = "http://localhost:8000";
 
@@ -29,13 +30,10 @@ const BasicRace = () => {
 
   }, []);
 
-  const onInitRace = () => {
-    console.log('ON_INIT_RACE')
-
-    startTrafficLights()
-      .then(res => {
-        console.log('ON_START_SEMAFORO')
-      })
+  const onInitRace = (data) => {
+    console.log('ON_INIT_RACE', data)
+    saveBasicRace(data)
+      .then(() => startYellowLight().then())
   }
 
   const socket = socketClient(SERVER, {transports: ['websocket', 'polling', 'flashsocket']});
@@ -52,8 +50,6 @@ const BasicRace = () => {
         <div className={clsx(css.halfPart, css.centeredContent)}>
           CREAR NUEVA CARRERA RÁPIDA
           <BasicRaceForm onSubmit={onInitRace} />
-          <div>{player1Laps}</div>
-          <div>{player2Laps}</div>
         </div>
         <div className={css.halfPart}>
           PART 2
