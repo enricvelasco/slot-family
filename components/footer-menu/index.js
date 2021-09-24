@@ -15,6 +15,7 @@ import GlovesIcon from "../ui/icons/gloves-icon";
 import FinishFlagIcon from "../ui/icons/finish-flag-icon";
 import BasicRaceIcon from "../ui/icons/basic-race-icon";
 import CupIcon from "../ui/icons/cup-icon";
+import ToolsIcon from "../ui/icons/tools-icon";
 
 const FooterMenu = () => {
   const ref = useRef()
@@ -68,6 +69,11 @@ const FooterMenu = () => {
         <div className={clsx(css.optionsContainer, showRaceContent && css.show)}>
           <button className={css.option} onClick={() => router.push('/championships')}><CupIcon size={'40'} /></button>
           <button className={css.option} onClick={() => router.push('/basic-race')}><BasicRaceIcon size={'40'} /></button>
+        </div>
+      </div>
+      <div className={css.buttonContainer} ref={raceRef}>
+        <div className={css.select} onClick={() => router.push('/settings')}>
+          <ToolsIcon size={'40'} />
         </div>
       </div>
     </nav>
