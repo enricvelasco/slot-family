@@ -4,8 +4,10 @@ import {sortArrayByParam} from "../../../services/array";
 const collectionName = 'basic-race'
 const ref = firebase.firestore().collection(collectionName)
 
+let lastRaceCreated = '';
 export const raceListener = () => {
   let firstTime = true
+
   console.log('RACE_LISTENER_INIT');
   ref.onSnapshot((querySnapshot) => {
     console.log('QUERY_SNAPSHOT')
@@ -15,12 +17,18 @@ export const raceListener = () => {
     });
     // console.log('RACES::', sortArrayByParam(races, 'onCreateData').reverse())
     const lastRace = sortArrayByParam(races, 'onCreateData').reverse()[0]
-    console.log('LAST_RACE', lastRace)
+    // console.log('LAST_RACE', lastRace.id)
+    // console.log('LAST_RACE_CREATED', lastRaceCreated)
     // resolve(sortArrayByParam(races, 'onCreateData').reverse())
-    if (!firstTime) {
+    const hasInRacePage = window.location.pathname.includes(lastRace?.id)
+    if (!hasInRacePage && !firstTime && lastRace.id !== lastRaceCreated) {
+      // console.log('NEW_TAB::', window.location)
       const url = `${window.location.origin}/basic-race/${lastRace.id}`
-      console.log('URL::::', url)
-      window.open(url, '_blank').focus();
+      window.open(url, '_blank')?.focus();
+      // console.log('URL::::', url)
+      // console.log('LAST_RACE_CREATED', lastRaceCreated)
+      // lastRace.id !== lastRaceCreated && window.open(url, '_blank')?.focus();
+      lastRaceCreated = lastRace.id
       // window.open(url, '_self').focus();
     }
     firstTime = false
