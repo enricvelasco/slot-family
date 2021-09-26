@@ -2,8 +2,9 @@ import React, {useEffect, useReducer, useState} from 'react'
 import {getUsers} from "../../firebase/data/users";
 import {formInitialState, reducer} from "./resources";
 import {getCars} from "../../firebase/data/cars";
+import {sortArrayByParam} from "../../services/array";
 
-const BasicRaceForm = ({ onSubmit }) => {
+const BasicRaceForm = ({ onSubmit, lastRace }) => {
   const [usersList, setUsersList] = useState([])
   const [carsList, setCarsList] = useState([])
   const [state, dispatch] = useReducer(reducer, formInitialState)
@@ -18,7 +19,10 @@ const BasicRaceForm = ({ onSubmit }) => {
       .catch(err => console.log('ERROR_ON_GET_USERS', err))
 
     getCars()
-      .then(data => setCarsList(data))
+      .then(data => {
+        const listData = data.map(item => ({...item, viewName: `${item.constructor?.name} - ·${item.model}`}))
+        setCarsList(sortArrayByParam(listData, 'viewName'))
+      })
       .catch(err => console.log('ERROR_ON_GET_CARS', err))
   }, [])
 
@@ -61,7 +65,7 @@ const BasicRaceForm = ({ onSubmit }) => {
                 key={key}
                 value={JSON.stringify(item)}
               >
-                {item.model}
+                {item.viewName}
               </option>
             )
           })}
@@ -99,7 +103,7 @@ const BasicRaceForm = ({ onSubmit }) => {
                 key={key}
                 value={JSON.stringify(item)}
               >
-                {item.model}
+                {item.viewName}
               </option>
             )
           })}
