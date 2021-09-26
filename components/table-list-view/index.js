@@ -8,8 +8,8 @@ const TableListView = ({ list, params, onSelect }) => (
       return (
         <div className={css.gridContainer} key={key} onClick={() => onSelect(key)}>
           <ImageContainer src={item[params[0]]} />
-          <div className={css.item}>{item[params[1]].toString()}</div>
-          <div className={css.item}>{item[params[2]].toString()}</div>
+          <div className={css.item}>{item[params[1]]?.toString()}</div>
+          <div className={css.item}>{item[params[2]]?.toString()}</div>
         </div>
       )
     })}

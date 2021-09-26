@@ -36,8 +36,7 @@ const BasicRace = () => {
 
   // const [state, dispatch] = useReducer(reducer, formInitialState)
   // const { player1Laps, player2Laps } = state
-
-  useEffect(() => {
+  const getRaces = () => {
     getBasicRaces()
       .then(res => {
         setList(res.map(item => ({
@@ -48,12 +47,19 @@ const BasicRace = () => {
       })
       .catch(err => console.log('ERROR_ON_GET_CARS', err))
       .finally(() => setIsLoading(false))
+  }
+
+  useEffect(() => {
+    getRaces();
   }, []);
 
   const onInitRace = (data) => {
     console.log('ON_INIT_RACE', data)
     saveBasicRace(data)
-      .then(() => startYellowLight().then())
+      .then(() => {
+        getRaces();
+        startYellowLight().then()
+      })
   }
 
   /*console.log('SERVER::', SERVER)
@@ -78,7 +84,10 @@ const BasicRace = () => {
       <div className={css.basicRaceContainer}>
         <div className={clsx(css.halfPart, css.centeredContent)}>
           CREAR NUEVA CARRERA RÁPIDA
-          <BasicRaceForm onSubmit={onInitRace} />
+          <BasicRaceForm
+            lastRace={!!list?.length ? sortArrayByParam(list, 'onCreateData').reverse()[0] : false}
+            onSubmit={onInitRace}
+          />
         </div>
         <div className={css.halfPart}>
           {!isLoading && list &&
