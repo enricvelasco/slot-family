@@ -5,6 +5,7 @@ export const formInitialState = {
   year: '',
   group: '',
   imageUrl: '',
+  commercialImage: '',
   owner: '',
   sponsors: [],
   description: ''

@@ -8,7 +8,6 @@ import {
   resizeImage,
 } from "../../services/file_management";
 import {generateRandomId} from "../../services/random";
-import {groupsList} from "../../mock/group";
 import {enginePositionList} from "../../mock/enginePosition";
 import Wrapper from "../../components/wrapper";
 import css from '../../styles/components/form.module.scss'
@@ -20,7 +19,7 @@ import {getChampionshipTypes} from "../../firebase/data/championship-types";
 const CarsForm = ({ onSubmit, data = null }) => {
   const [state, dispatch] = useReducer(reducer, data || formInitialState)
   const [isUpdatingImage, setIsUpdatingImage] = useState(false)
-  const { id, manufacturer, constructor, model, year, group, imageUrl, owner, sponsors, description, enginePosition } = state
+  const { id, manufacturer, constructor, model, year, group, imageUrl, owner, sponsors, description, enginePosition, commercialImage } = state
 
   const [optionsState, optionsDispatch] = useReducer(reducer, formInitialOptions)
   const {manufacturerList, constructorList, sponsorsList, championshipTypesList} = optionsState
@@ -41,7 +40,7 @@ const CarsForm = ({ onSubmit, data = null }) => {
     onSubmit(state)
   }
 
-  const onChange = (file) => {
+  const onChange = (file, param) => {
     if (file) {
       setIsUpdatingImage(true)
       const extension = getFileExtension(file.name)
@@ -54,7 +53,7 @@ const CarsForm = ({ onSubmit, data = null }) => {
             .then(url => {
               console.log('IMAGE_UPDATED', url)
               setIsUpdatingImage(false)
-              dispatch({ type: 'imageUrl', payload: url})
+              dispatch({ type: param, payload: url})
             })
         })
     }
@@ -134,8 +133,14 @@ const CarsForm = ({ onSubmit, data = null }) => {
       </div>
       <div>
         <label>IMAGEN:</label>
-        <input type="file" id="files" name="files" onChange={event => onChange(event.target.files[0] || null)} />
+        <input type="file" id="files" name="files" onChange={event => onChange(event.target.files[0] || null, 'imageUrl')} />
         {imageUrl && <Image id='car_img' src={imageUrl} width={100} height={75} alt="Image preview..."/>}
+        {isUpdatingImage && <span>Updating image...</span>}
+      </div>
+      <div>
+        <label>IMAGEN COMERCIAL:</label>
+        <input type="file" id="files_commercial" name="files_commercial" onChange={event => onChange(event.target.files[0] || null, 'commercialImage')} />
+        {commercialImage && <Image id='car_img_commercial' src={commercialImage} width={100} height={75} alt="Image preview..."/>}
         {isUpdatingImage && <span>Updating image...</span>}
       </div>
       <div>
