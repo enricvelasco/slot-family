@@ -1,3 +1,5 @@
+@import "/styles/config/colors.scss";
+
 html,
 body {
   padding: 0;
@@ -14,13 +16,15 @@ html {
 }
 
 body {
-  max-width: 67.6rem;
-  min-width: 22.5rem;
+  /*max-width: 67.6rem;
+  min-width: 22.5rem;*/
   width: 100%;
-  margin: 0 auto;
-  background-color: #dedede;
+  /*margin: 0 auto;*/
+  background-color: #f2f2f2;
   height: 100%;
-  padding-bottom: 3.75rem;
+  overflow: hidden;
+  /*margin-bottom: 6rem;*/
+  /* padding-bottom: 6rem; */
 }
 
 a {

@@ -1,6 +1,6 @@
 import React from 'react'
 import css from '../../styles/components/table-list-view.module.scss'
-import ImageContainer from "../image-container";
+import ImageContainer from "../common/image-container";
 
 const TableListView = ({ list, params, onSelect }) => (
   <>

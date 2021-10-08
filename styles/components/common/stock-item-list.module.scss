@@ -1,0 +1,27 @@
+@import "styles/config/colors";
+@import "styles/mixins/media-queries";
+
+.gridItem {
+  height: 13rem;
+  position: relative;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.itemTitle {
+  width: fit-content;
+  position: absolute;
+  z-index: 1;
+  color: $whiteColor;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  text-shadow: $defaultTextBorder;
+}
+
+.gridItemImage {
+  height: 13rem;
+}

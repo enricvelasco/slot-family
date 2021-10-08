@@ -1,0 +1,16 @@
+@import "styles/config/colors";
+@import "styles/mixins/media-queries";
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  @include desktop {
+    width: 30rem;
+  }
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding-bottom: 6rem;
+}

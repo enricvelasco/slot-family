@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Wrapper from "../../components/wrapper";
 import GridList from "../../components/grid-list";
 import {getUsers} from "../../firebase/data/users";
+import WrapperContent from "../../components/wrapper-content";
 
 const UsersList = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -20,8 +21,10 @@ const UsersList = () => {
 
   return (
     <Wrapper>
-      {isLoading && <div>Loading list...</div>}
-      {!isLoading && <GridList list={list}/>}
+      <WrapperContent>
+        {isLoading && <div>Loading list...</div>}
+        {!isLoading && <GridList list={list}/>}
+      </WrapperContent>
     </Wrapper>
   )
 }
