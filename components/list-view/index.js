@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import { useRouter } from 'next/router'
-import ImageContainer from "../image-container";
-import Carousel from "../carousel";
+import ImageContainer from "../common/image-container";
 import css from '../../styles/components/list-view.module.scss'
 import ListViewContentComponent from "./components/content-component";
-import PencilIcon from "../ui/icons/pencil-icon";
-import PlusIcon from "../ui/icons/plus-icon";
-import SearchIcon from "../ui/icons/search-icon";
+import PencilIcon from "../common/ui/icons/pencil-icon";
+import PlusIcon from "../common/ui/icons/plus-icon";
+import SearchIcon from "../common/ui/icons/search-icon";
 import clsx from "clsx";
 import TableListView from "../table-list-view";
 import {sortArrayByParam} from "../../services/array";
@@ -69,14 +68,6 @@ const ListView = ({ data, imageClassName, viewParams }) => {
         alt={selectedValue?.name}
       />
       <div className={css.carouselContainer}>
-        {/* <Carousel
-          list={dataList}
-          viewParam={'name'}
-          onSelect={onSelectItem}
-          keySelected={selectedIndex}
-          imageClassName={imageClassName}
-          ContentComponent={ListViewContentComponent}
-        /> */}
         <TableListView
           list={data}
           params={viewParams}

@@ -1,5 +1,7 @@
+@import "styles/config/colors";
+
 .imageContainer {
     width: 100%;
     position: relative;
-    background-color: #0070f3;
+    background-color: $grey;
 }
