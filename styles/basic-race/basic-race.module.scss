@@ -1,8 +1,9 @@
-.basicRaceContainer {
+.wrapper {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  overflow: auto;
 }
 
 .halfPart {
@@ -11,14 +12,15 @@
   overflow-y: auto;
 }
 
-.centeredContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.list {
+  // width: 100%;
+  // height: 50%;
+  padding-bottom: 6rem;
 }
 
-.basicRaceActiveContainer {
+.itemList {
+  width: 100%;
   display: grid;
   grid-template-columns: 50% 50%;
+  grid-template-rows: 3.75rem;
 }

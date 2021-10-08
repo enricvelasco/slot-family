@@ -1,5 +1,5 @@
 import React from 'react'
-import ImageContainer from "../../image-container";
+import ImageContainer from "../../common/image-container";
 import css from '../../../styles/components/list-view.module.scss'
 
 const ListViewContentComponent = ({ item }) => {

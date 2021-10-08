@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useRouter} from "next/router";
 import css from '../../styles/components/wrapper.module.scss'
-import FooterMenu from "../footer-menu";
+import FooterMenu from "../new-footer-menu";
 import {onAuthStateChange} from "../../firebase/auth";
 
 const Wrapper = ({ children }) => {

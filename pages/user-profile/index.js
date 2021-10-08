@@ -2,6 +2,7 @@ import React from 'react'
 import Wrapper from "../../components/wrapper";
 import {onSignOut, setLoginWithEmailAndPassword} from "../../firebase/auth";
 import {useRouter} from "next/router";
+import WrapperContent from "../../components/wrapper-content";
 
 const UserProfile = ({ user }) => {
   const router = useRouter()
@@ -14,9 +15,11 @@ const UserProfile = ({ user }) => {
 
   return (
     <Wrapper>
-      User PROFILE
-      <p>{user && user.email}</p>
-      <button onClick={onSignOut}>LOGOUUT</button>
+      <WrapperContent>
+        User PROFILE
+        <p>{user && user.email}</p>
+        <button onClick={onSignOut}>LOGOUUT</button>
+      </WrapperContent>
     </Wrapper>
   )
 }

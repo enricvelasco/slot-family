@@ -12,6 +12,7 @@ import ListView from "../../components/list-view";
 import {sortArrayByParam} from "../../services/array";
 import TableListView from "../../components/table-list-view";
 import {useRouter} from "next/router";
+import BasicRaceController from "../../components/basic-race";
 
 const SERVER = "http://localhost:8000";
 
@@ -81,7 +82,8 @@ const BasicRace = () => {
 
   return (
     <Wrapper>
-      <div className={css.basicRaceContainer}>
+      <BasicRaceController />
+      {/*<div className={css.basicRaceContainer}>
         <div className={clsx(css.halfPart, css.centeredContent)}>
           CREAR NUEVA CARRERA RÁPIDA
           <BasicRaceForm
@@ -91,13 +93,13 @@ const BasicRace = () => {
         </div>
         <div className={css.halfPart}>
           {!isLoading && list &&
-            <TableListView
-              list={sortArrayByParam(list, 'onCreateData').reverse()}
-              params={['', 'players', 'date']}
-              onSelect={goToRaceData}
-            />}
+          <TableListView
+            list={sortArrayByParam(list, 'onCreateData').reverse()}
+            params={['', 'players', 'date']}
+            onSelect={goToRaceData}
+          />}
         </div>
-      </div>
+      </div>*/}
     </Wrapper>
   )
 }

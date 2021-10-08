@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Wrapper from "../../components/wrapper";
 import SettingsForm from "../../forms/settings";
 import {getSettings, saveSettings} from "../../firebase/data/settings";
+import WrapperContent from "../../components/wrapper-content";
 
 const Settings = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -21,8 +22,10 @@ const Settings = () => {
   }
   return (
     <Wrapper>
-      {isLoading && <div>Loading list...</div>}
-      {!isLoading && <SettingsForm data={settings} onSubmit={updateSettings}/>}
+      <WrapperContent>
+        {isLoading && <div>Loading list...</div>}
+        {!isLoading && <SettingsForm data={settings} onSubmit={updateSettings}/>}
+      </WrapperContent>
     </Wrapper>
   )
 }
