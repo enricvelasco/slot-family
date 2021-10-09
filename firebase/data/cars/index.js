@@ -41,7 +41,7 @@ export const saveCar = (data) => {
 }
 
 export const setImage = ({ filename, payload }) => {
-  const storageRef = firebase.storage().ref(`car_images/${filename}`);
+  const storageRef = firebase.storage().ref(`car_images_sizes/${filename}`);
 
   return new Promise(function(resolve, reject) {
     storageRef.put(payload)
