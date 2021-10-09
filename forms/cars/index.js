@@ -19,7 +19,21 @@ import {getChampionshipTypes} from "../../firebase/data/championship-types";
 const CarsForm = ({ onSubmit, data = null }) => {
   const [state, dispatch] = useReducer(reducer, data || formInitialState)
   const [isUpdatingImage, setIsUpdatingImage] = useState(false)
-  const { id, manufacturer, constructor, model, year, group, imageUrl, owner, sponsors, description, enginePosition, commercialImage } = state
+  const {
+    id,
+    manufacturer,
+    constructor,
+    model,
+    year,
+    group,
+    imageUrl,
+    imageUrlSmall,
+    owner,
+    sponsors,
+    description,
+    enginePosition,
+    commercialImage
+  } = state
 
   const [optionsState, optionsDispatch] = useReducer(reducer, formInitialOptions)
   const {manufacturerList, constructorList, sponsorsList, championshipTypesList} = optionsState
@@ -54,6 +68,18 @@ const CarsForm = ({ onSubmit, data = null }) => {
               console.log('IMAGE_UPDATED', url)
               setIsUpdatingImage(false)
               dispatch({ type: param, payload: url})
+            })
+        })
+      resizeImage({ file, maxWidth: 500 })
+        .then(resizedImage => {
+          setImage({
+            filename: `${generateRandomId()}.${extension}`,
+            payload: resizedImage
+          })
+            .then(url => {
+              console.log('IMAGE_UPDATED', url)
+              setIsUpdatingImage(false)
+              dispatch({ type: `${param}Small`, payload: url})
             })
         })
     }
