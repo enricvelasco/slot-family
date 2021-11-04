@@ -6,8 +6,9 @@ import socketClient  from "socket.io-client";
 import {basicRaceInitialState, reducer} from "../../../forms/basic-race/resources";
 import {convertMillisToTime, getBestTime, getFormattedTime, getTotalTime} from "../../../services/time";
 import css from '../../../styles/basic-race/basic-race.module.scss'
+import {socketUrl} from "../../../env/env";
 
-const SERVER = "http://localhost:8000";
+const SERVER = socketUrl;
 
 const BasicRaceDetail = () => {
   const router = useRouter()
